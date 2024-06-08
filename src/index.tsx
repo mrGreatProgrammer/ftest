@@ -28,9 +28,7 @@ root.render(
               },
             }}
           >
-            <QueryClientProvider client={queryClient}>
               <App />
-            </QueryClientProvider>
           </ConfigProvider>
         </BrowserRouter>
       </PersistGate>
