@@ -64,8 +64,8 @@ export const usersSlice = createSlice({
     builder.addCase(loginApi.fulfilled, (state, action) => {
       state.userErr = "";
       state.isFetchingUser = false;
-      state.userInfo = action.payload.user;
-      state.token = action.payload.token;
+      state.userInfo = action.payload[0];
+      // state.token = action.payload.token;
       state.authorized = true;
     });
   },

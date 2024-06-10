@@ -11,10 +11,14 @@ export const loginApi = createAsyncThunk(
   ) => {
     try {
       // тут использую фейковый api потому запрос не post и url не тот как при обычном логине
-      const data: any = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
-        { email, password }
+      const data: any = await axios.get(
+        `${process.env.REACT_APP_API_URL}/users`,
+        {params:{ email, password }}
       );
+      // const data: any = await axios.post(
+      //   `${process.env.REACT_APP_API_URL}/user/login`,
+      //   { email, password }
+      // );
       
       return data.data;
     } catch (error) {

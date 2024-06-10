@@ -6,8 +6,9 @@ export type rolesType = "STUDENT" | "TEACHER" | "PARENT";
 
 export interface IUserInfo {
   id: string;
+  avatar: string;
   userName: string;
   email: string;
-  role: rolesType[];
+  role?: rolesType[];
   // password: string;
 }

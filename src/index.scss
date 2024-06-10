@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  //   font: 15px ‘Roboto’, Arial, Helvetica, sans-serif;
+  //styleName: Title 3 20;
+  font-family: "Circe Rounded";
+}
+
+.ant-menu-light .ant-menu-item-selected {
+  background: #8d7fc7 !important;
+  color: #fff;
+  border-radius: 0px 30px 30px 0px;
+  .p {
+    fill: white;
+  }
+  .t {
+    stroke: white;
+  }
+}
+// .ant-menu-title-content {
+//   .active {
+//   }
+// }
+
+// SCROLL-BAR
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+.balance_card-menu {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px white;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #eeeeff;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #eeeeff;
+}

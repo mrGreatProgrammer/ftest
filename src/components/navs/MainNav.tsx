@@ -1,106 +1,232 @@
 import {
-    CarOutlined,
-    HomeFilled,
-    HomeOutlined,
-    PieChartOutlined,
-    TeamOutlined,
-  } from "@ant-design/icons";
-  import { Menu, MenuProps } from "antd";
-  import React from "react";
-  import { NavLink, useLocation } from "react-router-dom";
-  import { RiAdvertisementLine } from "react-icons/ri";
-  
-  type MenuItem = Required<MenuProps>["items"][number];
-  
-  function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    children?: MenuItem[],
-    icon?: React.ReactNode
-  ): MenuItem {
-    return {
-      key,
-      icon,
-      children,
-      label,
-    } as MenuItem;
-  }
-  
-  const items: MenuItem[] = [
-    getItem(
-      "statistics",
-      "statistics",
-      [
-        getItem(<NavLink to="/">main</NavLink>, "/"),
-        getItem(
-          <NavLink to="/statistics/users">users' statistics</NavLink>,
-          "user-statistics"
-        ),
-        getItem(
-          <NavLink to="/statistics/announcement">
-            announcements' statistics
-          </NavLink>,
-          "statistics-announcement"
-        ),
-      ],
-      <PieChartOutlined />
-    ),
-    getItem(
-      <NavLink to="/users">Пользователи</NavLink>,
-      "users",
-      [getItem(<NavLink to="/users">Все пользователи</NavLink>, "users")],
-      <TeamOutlined />
-    ),
-    getItem(
-      <NavLink to="/services">Услуги</NavLink>,
-      "services",
-      [
-        getItem(<NavLink to="/services/">Все услуги</NavLink>, "services"),
-        getItem(
-          <NavLink to="/services/attributes">атрибуты</NavLink>,
-          "services_attrs",
-          [
-            getItem(
-              <NavLink to="/services/attributes/category">категории</NavLink>,
-              "/services/category"
-            ),
-            // getItem(<NavLink to={'/houses/attributes/type'} >Тип недвижимости</NavLink> , "/houses/type"),
-            // getItem(<NavLink to={'/houses/attributes/comforts'} >Удобство</NavLink> , "/houses/type"),
-          ]
-        ),
-      ],
-      <HomeOutlined />
-    ),
-    getItem(
-      <NavLink to="/advs">Реклама</NavLink>,
-      "advs",
-      [
-        getItem(<NavLink to="/advs/">advs types</NavLink>, "advs"),
-        getItem(<NavLink to="/advs/ordered">all advs ordered</NavLink>, "advs"),
-      ],
-      <RiAdvertisementLine />
-    ),
-  ];
-  
-  const MainNav = () => {
-    // const navigation = useNavigation();
-    const location = useLocation();
-    const [current, setCurrent] = React.useState("graphic");
-    const onClick: MenuProps["onClick"] = (e) => {
-      console.log("click ", e);
-      setCurrent(e.key);
-    };
-  
-    return (
-      <Menu
-        style={{ overflow: "auto", height: "90vh", color: "#fff" }}
-        theme="dark"
-        mode="inline"
-        onClick={onClick}
-        selectedKeys={[location.pathname]}
-        items={items}
+  CarOutlined,
+  HomeFilled,
+  HomeOutlined,
+  PieChartOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
+import { Menu, MenuProps } from "antd";
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { GoHome } from "react-icons/go";
+import { IoCalendarOutline } from "react-icons/io5";
+import { LiaWalletSolid } from "react-icons/lia";
+import { FaRegFolderOpen } from "react-icons/fa";
+
+type MenuItem = Required<MenuProps>["items"][number];
+
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  children?: MenuItem[] | null,
+  icon?: React.ReactNode
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  } as MenuItem;
+}
+
+const items: MenuItem[] = [
+  getItem(<NavLink to="/">Главная</NavLink>, "/", null, <GoHome />),
+  getItem(
+    <NavLink to="/schedule">Расписание</NavLink>,
+    "/schedule",
+    null,
+    <IoCalendarOutline />
+  ),
+  getItem(
+    <NavLink to="/pay">Оплата</NavLink>,
+    "/pay",
+    null,
+    <LiaWalletSolid />
+  ),
+  getItem(
+    <NavLink to="/cup">Достижения</NavLink>,
+    "/cup",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        className="p"
+        d="M9 19.75C8.58579 19.75 8.25 20.0858 8.25 20.5C8.25 20.9142 8.58579 21.25 9 21.25V19.75ZM15 21.25C15.4142 21.25 15.75 20.9142 15.75 20.5C15.75 20.0858 15.4142 19.75 15 19.75V21.25ZM17 5.75C16.5858 5.75 16.25 6.08579 16.25 6.5C16.25 6.91421 16.5858 7.25 17 7.25V5.75ZM7 7.25C7.41421 7.25 7.75 6.91421 7.75 6.5C7.75 6.08579 7.41421 5.75 7 5.75V7.25ZM13 15.75H11V17.25H13V15.75ZM11 15.75C9.20521 15.75 7.75 14.2948 7.75 12.5H6.25C6.25 15.1232 8.37679 17.25 11 17.25V15.75ZM7.75 12.5V4.5H6.25V12.5H7.75ZM7.75 4.5C7.75 4.36221 7.86221 4.25 8 4.25V2.75C7.03379 2.75 6.25 3.53379 6.25 4.5H7.75ZM8 4.25H16V2.75H8V4.25ZM16 4.25C16.1378 4.25 16.25 4.36221 16.25 4.5H17.75C17.75 3.53379 16.9662 2.75 16 2.75V4.25ZM16.25 4.5V12.5H17.75V4.5H16.25ZM16.25 12.5C16.25 14.2948 14.7948 15.75 13 15.75V17.25C15.6232 17.25 17.75 15.1232 17.75 12.5H16.25ZM11.25 16.5V20.5H12.75V16.5H11.25ZM9 21.25H15V19.75H9V21.25ZM17 7.25H20V5.75H17V7.25ZM20 7.25C20.1378 7.25 20.25 7.36221 20.25 7.5H21.75C21.75 6.53379 20.9662 5.75 20 5.75V7.25ZM20.25 7.5V9.5H21.75V7.5H20.25ZM20.25 9.5C20.25 10.7428 19.2428 11.75 18 11.75V13.25C20.0712 13.25 21.75 11.5712 21.75 9.5H20.25ZM18 11.75H17V13.25H18V11.75ZM7 5.75H4V7.25H7V5.75ZM4 5.75C3.03379 5.75 2.25 6.53379 2.25 7.5H3.75C3.75 7.36221 3.86221 7.25 4 7.25V5.75ZM2.25 7.5V9.5H3.75V7.5H2.25ZM2.25 9.5C2.25 11.5712 3.92879 13.25 6 13.25V11.75C4.75721 11.75 3.75 10.7428 3.75 9.5H2.25ZM6 13.25H7V11.75H6V13.25Z"
+        fill="#434B74"
       />
-    );
+    </svg>
+
+    // <IoCalendarOutline />
+  ),
+  getItem(
+    <NavLink to="/trane">Тренажеры</NavLink>,
+    "/trane",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21.0037 15.6705V18.8919"
+        stroke="#434B74"
+        className="t"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M21.0027 7.275V10.4963H21.0037C20.537 10.4022 20.0537 10.4336 19.6031 10.5874C18.7658 10.8737 18.1305 11.5647 17.9154 12.4231C17.7132 13.2142 17.8877 14.0544 18.3881 14.6996C18.8886 15.3447 19.659 15.7227 20.4755 15.7235C20.6529 15.7232 20.8298 15.7055 21.0037 15.6705V18.8918C21.0037 19.452 20.7813 19.9891 20.3852 20.3852C19.9891 20.7813 19.452 21.0038 18.8918 21.0037H15.6705V21.0047C15.7647 20.538 15.7333 20.0547 15.5795 19.6041C15.2932 18.7668 14.6021 18.1315 13.7437 17.9164C12.9526 17.7142 12.1125 17.8887 11.4673 18.3891C10.8221 18.8896 10.4442 19.66 10.4433 20.4765C10.4436 20.6539 10.4614 20.8308 10.4963 21.0047L7.276 21.0037C6.10994 21.0039 5.16446 20.0589 5.16412 18.8928V15.6715C4.99021 15.7065 4.81329 15.7242 4.6359 15.7245C3.81937 15.7237 3.049 15.3458 2.54854 14.7006C2.04808 14.0554 1.87362 13.2152 2.07583 12.4241C2.29086 11.5657 2.92617 10.8747 3.76354 10.5884C4.2141 10.4346 4.69743 10.4032 5.16412 10.4973H5.16312V7.276C5.16308 6.71588 5.38556 6.17869 5.78163 5.78263C6.17769 5.38657 6.71488 5.16408 7.275 5.16412H10.4963C10.4614 4.99021 10.4436 4.81329 10.4433 4.6359C10.4442 3.81937 10.8221 3.049 11.4673 2.54854C12.1125 2.04808 12.9526 1.87362 13.7437 2.07583C14.6018 2.29148 15.2926 2.92655 15.5795 3.76354C15.7333 4.2141 15.7647 4.69743 15.6705 5.16412H18.8918C19.452 5.16408 19.9891 5.38657 20.3852 5.78263C20.7813 6.17869 21.0037 6.71588 21.0037 7.276"
+        stroke="#434B74"
+        className="t"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  ),
+  getItem(
+    <NavLink to="/lib">Библиотека</NavLink>,
+    "/lib",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M9.47054 3.25C9.99716 3.25 10.4928 3.48689 10.8234 3.8898L10.9174 4.01558L12.3224 6.08063C12.3574 6.13195 12.4096 6.16781 12.4685 6.18253L12.5291 6.19H18C19.4625 6.19 20.6584 7.3317 20.745 8.77248L20.75 8.94V10.879L20.8853 10.9987L21.0192 11.134L21.1443 11.2793C21.6261 11.8799 21.8322 12.6523 21.7187 13.4081L21.6837 13.5966L20.5726 18.5966C20.3057 19.7976 19.2767 20.6679 18.0627 20.7445L17.8881 20.75H4.66466C4.02425 20.75 3.41007 20.4956 2.95724 20.0428C2.54968 19.6352 2.30286 19.097 2.25758 18.5265L2.25 18.3353V6C2.25 4.53747 3.3917 3.3416 4.83248 3.25502L5 3.25H9.47054ZM9.60435 11.75C9.06033 11.75 8.5841 12.1009 8.41708 12.6089L8.38414 12.7288L7.0218 18.8592C6.99725 18.9696 6.96535 19.0769 6.9267 19.1806L6.897 19.25H17.8881C18.4321 19.25 18.9083 18.8991 19.0754 18.3911L19.1083 18.2712L20.2194 13.2712C20.3017 12.901 20.2115 12.5136 19.9742 12.2178C19.8853 12.1069 19.7792 12.0134 19.6614 11.9398L19.5399 11.873C19.4149 11.813 19.2799 11.7738 19.1402 11.758L18.9992 11.75H9.60435ZM5 4.75H9.47054L9.53122 4.75747C9.5901 4.77219 9.64237 4.80806 9.67728 4.85937L11.0823 6.92442L11.1764 7.0502C11.5069 7.4531 12.0025 7.69 12.5291 7.69H18L18.1278 7.69645C18.7581 7.76047 19.25 8.29279 19.25 8.94V10.262L19.1908 10.2567C19.1273 10.2522 19.0634 10.25 18.9992 10.25H9.60434L9.42971 10.2555C8.2157 10.3322 7.18675 11.2024 6.91986 12.4034L5.55752 18.5338L5.52543 18.6448C5.39656 19.0039 5.05437 19.25 4.66466 19.25C4.42208 19.25 4.18943 19.1536 4.0179 18.9821C3.84637 18.8106 3.75 18.5779 3.75 18.3353V6L3.75645 5.87219C3.82047 5.24187 4.35279 4.75 5 4.75Z"
+        fill="#434B74"
+        className="p"
+      />
+    </svg>
+  ),
+  getItem(
+    <NavLink to="/net">Проверка связи</NavLink>,
+    "/net",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18 17H19C20.105 17 21 16.105 21 15V12C21 10.895 20.105 10 19 10H18C17.448 10 17 10.448 17 11V16C17 16.552 17.448 17 18 17ZM18 17V18C18 19.105 17.105 20 16 20H13.875M18.5 10V9.5C18.5 5.91 15.59 3 12 3C8.41 3 5.5 5.91 5.5 9.5V10M13.875 20C13.875 19.31 13.315 18.75 12.625 18.75H11.375C10.685 18.75 10.125 19.31 10.125 20C10.125 20.69 10.685 21.25 11.375 21.25H12.625C13.315 21.25 13.875 20.69 13.875 20ZM6 17H5C3.895 17 3 16.105 3 15V12C3 10.895 3.895 10 5 10H6C6.552 10 7 10.448 7 11V16C7 16.552 6.552 17 6 17Z"
+        stroke="#434B74"
+        className="t"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  ),
+  getItem(
+    <NavLink to="/settings">Настройки</NavLink>,
+    "/settings",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.1213 9.87868C15.2929 11.0502 15.2929 12.9497 14.1213 14.1213C12.9497 15.2929 11.0502 15.2929 9.87868 14.1213C8.70711 12.9497 8.70711 11.0502 9.87868 9.87868C11.0502 8.70711 12.9497 8.70711 14.1213 9.87868"
+        stroke="#434B74"
+        className="t"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M16.18 18.725V18.725C16.683 19.228 17.5 19.228 18.003 18.725L18.725 18.003C19.228 17.5 19.228 16.683 18.725 16.18V16.18C18.343 15.798 18.231 15.225 18.441 14.727C18.463 14.674 18.485 14.621 18.506 14.567C18.689 14.101 19.143 13.801 19.643 13.801H19.71C20.422 13.801 20.999 13.224 20.999 12.512V11.491C20.999 10.779 20.422 10.202 19.71 10.202H19.643C19.143 10.202 18.689 9.901 18.506 9.436C18.485 9.382 18.463 9.329 18.441 9.276C18.231 8.778 18.343 8.205 18.725 7.823V7.823C19.228 7.32 19.228 6.503 18.725 6L18.003 5.278C17.5 4.775 16.683 4.775 16.18 5.278V5.278C15.798 5.66 15.225 5.772 14.727 5.562C14.674 5.54 14.621 5.518 14.567 5.497C14.101 5.311 13.8 4.856 13.8 4.356V4.289C13.8 3.577 13.223 3 12.511 3H11.49C10.777 3 10.2 3.577 10.2 4.289V4.356C10.2 4.856 9.899 5.31 9.434 5.493C9.38 5.515 9.327 5.536 9.274 5.559C8.776 5.769 8.203 5.657 7.821 5.275V5.275C7.318 4.772 6.501 4.772 5.998 5.275L5.275 5.997C4.772 6.5 4.772 7.317 5.275 7.82V7.82C5.657 8.202 5.769 8.775 5.559 9.273C5.536 9.327 5.515 9.38 5.494 9.434C5.311 9.899 4.856 10.2 4.356 10.2H4.289C3.577 10.2 3 10.777 3 11.489V12.51C3 13.223 3.577 13.8 4.289 13.8H4.356C4.856 13.8 5.31 14.101 5.493 14.566C5.514 14.62 5.536 14.673 5.558 14.726C5.768 15.224 5.656 15.797 5.274 16.179V16.179C4.771 16.682 4.771 17.499 5.274 18.002L5.996 18.724C6.499 19.227 7.316 19.227 7.819 18.724V18.724C8.201 18.342 8.774 18.23 9.272 18.44C9.325 18.462 9.378 18.484 9.432 18.505C9.898 18.688 10.198 19.142 10.198 19.642V19.709C10.198 20.421 10.775 20.998 11.487 20.998H12.508C13.22 20.998 13.797 20.421 13.797 19.709V19.642C13.797 19.142 14.098 18.688 14.563 18.505C14.617 18.484 14.67 18.462 14.723 18.44C15.224 18.231 15.797 18.343 16.18 18.725V18.725Z"
+        stroke="#434B74"
+        className="t"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  ),
+  getItem(
+    <NavLink to="/questions">Вопросы</NavLink>,
+    "/questions",
+    null,
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="12.0002"
+        cy="11.9997"
+        r="9.00375"
+        className="t"
+        stroke="#434B74"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12 12.7114L13.3276 11.9738C13.9901 11.6058 14.401 10.9075 14.401 10.1496C14.3225 8.88929 13.2417 7.92852 11.9808 7.99833C10.8543 7.95156 9.85385 8.71311 9.599 9.81149"
+        className="t"
+        stroke="#434B74"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.1001 15.9018C12.1001 15.957 12.0553 16.0017 12 16.0017C11.9448 16.0017 11.9001 15.9569 11.9 15.9017C11.9 15.8465 11.9447 15.8017 12 15.8016C12.0265 15.8016 12.052 15.8121 12.0708 15.8309C12.0896 15.8497 12.1002 15.8752 12.1001 15.9018"
+        className="t"
+        stroke="#434B74"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  ),
+];
+
+const MainNav = () => {
+  // const navigation = useNavigation();
+  const location = useLocation();
+  const [current, setCurrent] = React.useState("graphic");
+  const onClick: MenuProps["onClick"] = (e) => {
+    console.log("click ", e);
+    setCurrent(e.key);
   };
-  
-  export default MainNav;
+
+  return (
+    <Menu
+      style={{
+        overflow: "auto",
+        color: "#fff",
+        background: "#EEEEFF",
+      }}
+      mode="inline"
+      onClick={onClick}
+      selectedKeys={[location.pathname]}
+      items={items}
+    />
+  );
+};
+
+export default MainNav;

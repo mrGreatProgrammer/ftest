@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appSlice from "./appSlice";
 import usersSlice from "./usersSlice";
+import scheduleSlice from "./scheduleSlice";
 
 const rootPersistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   // appSlice: persistReducer(userPersistConfig, userPersistConfig)
   appSlice,
   usersSlice: persistReducer(userPersistConfig, usersSlice),
+  scheduleSlice
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);

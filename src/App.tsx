@@ -8,6 +8,8 @@ import LoginPage from "./pages/authPages/LoginPage";
 import MainLayout from "./components/Layouts/MainLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import AuthPage from "./pages/authPages/AuthPahge";
+import SchedulePage from "./pages/schedules/SchedulePage";
+import ProfilePage from "./pages/ProfilePages/ProfilePage";
 // import Release from "./components/ui/errs/Release/Release";
 
 function App() {
@@ -16,13 +18,15 @@ function App() {
     <div className="App">
       {/* <Release/> */}
       <Routes>
-        {true ? (
+        {authorized ? (
           <Route
             path="/"
             element={<MainLayout />}
             errorElement={<div>err</div>}
           >
             <Route index element={<MainPage />} />
+            <Route path="schedule" element={<SchedulePage />} />
+            <Route path="profile" element={<ProfilePage />} />
 
 
             <Route path="*" element={<NotFoundPage />} />

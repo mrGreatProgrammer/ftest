@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -24,7 +24,8 @@ root.render(
           <ConfigProvider
             theme={{
               token: {
-                colorText: "#1f1f1f",
+                colorText: "#323854",
+                colorPrimary: "#8D7FC7"
               },
             }}
           >

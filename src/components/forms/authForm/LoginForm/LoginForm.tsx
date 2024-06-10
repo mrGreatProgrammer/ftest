@@ -10,19 +10,20 @@ const LoginForm: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { isFetchingUser } = useAppSelector((state) => state.usersSlice);
 
-  function login(data: loginFormType) {
-    console.log("login data:", data);
-    dispatch(loginApi(data));
-  }
+    function login(data: loginFormType) {
+      console.log("login data:", data);
+      dispatch(loginApi(data));
+    }
 
   return (
     <div 
     // className="flex justify-center"
     >
       <div className="w-[400px]">
-        <Card
+        <h3 className="text-4xl text-center my-3">Вход в Sirius Future</h3>
+        {/* <Card
           title={"Войти"}
-        >
+        > */}
           <Form
             name="normal_login"
             className="login-form"
@@ -30,17 +31,17 @@ const LoginForm: React.FC = (): JSX.Element => {
             onFinish={login}
           >
             <Form.Item
-              name="phoneNumber"
+              name="email"
               rules={[
-                { required: true, message: "Please input your Username!" },
+                { required: true, message: "Введите Ваш email!" },
               ]}
             >
-              <Input addonBefore="+7" placeholder="Номер телефона" />
+              <Input  placeholder="E-mail" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please input your Password!" },
+                { required: true, message: "Введите Ваш пароль" },
               ]}
             >
               <Input.Password placeholder="Пароль" />
@@ -57,7 +58,7 @@ const LoginForm: React.FC = (): JSX.Element => {
               </Button>
             </Form.Item>
           </Form>
-        </Card>
+        {/* </Card> */}
       </div>
     </div>
   );
