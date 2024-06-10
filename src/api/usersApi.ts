@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
-import { loginFormType } from "../types/userType";
+import { IUserInfo, loginFormType } from "../types/userType";
 
 
 export const loginApi = createAsyncThunk(
@@ -37,13 +37,15 @@ export const loginApi = createAsyncThunk(
 export const editProfile = createAsyncThunk(
   "users/edit",
   async (
-    { email, password }: loginFormType,
-    { rejectWithValue }
+    formData: IUserInfo,
+    { rejectWithValue, getState }
   ) => {
     try {
-      const data: any = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
-        { email, password }
+      // @ts-ignore
+      const {userInfo} = getState().usersSlice;
+      const data: any = await axios.put(
+        `${process.env.REACT_APP_API_URL}/users/${userInfo.id}`,
+        formData
       );
       
       return data.data;

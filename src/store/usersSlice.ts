@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { IUserInfo } from "../types/userType";
-import { loginApi } from "../api/usersApi";
+import { editProfile, loginApi } from "../api/usersApi";
 import { notification } from "antd";
 
 export interface IUsersState {
@@ -67,6 +67,27 @@ export const usersSlice = createSlice({
       state.userInfo = action.payload[0];
       // state.token = action.payload.token;
       state.authorized = true;
+    });
+    builder.addCase(editProfile.pending, (state) => {
+      state.userErr = "";
+      state.isFetchingUser = true;
+    });
+    builder.addCase(editProfile.rejected, (state, action: PayloadAction<any>) => {
+      state.userErr = action.payload;
+      state.isFetchingUser = false;
+      notification.error({
+        message: "Ошибка при изменении!",
+        description: "err",
+      });
+      });
+      builder.addCase(editProfile.fulfilled, (state, action) => {
+        state.userErr = "";
+        state.isFetchingUser = false;
+        state.userInfo = action.payload;
+          notification.success({
+            message: "Успешно!",
+            description: "Успешно измененно",
+          });
     });
   },
 });

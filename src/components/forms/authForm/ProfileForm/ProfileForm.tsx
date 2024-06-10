@@ -1,10 +1,18 @@
-import { Button, Card, Form, Row, Upload } from "antd";
+import { Button, Card, DatePicker, Form, Input, Row, Upload } from "antd";
 import React from "react";
 import { IUserInfo } from "../../../../types/userType";
 import { FaPlus } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { editProfile } from "../../../../api/usersApi";
+import dayjs from 'dayjs';
 
 const ProfileForm = () => {
-  function submit(data: any) {}
+  const { userInfo,isFetchingUser } = useAppSelector((state) => state.usersSlice);
+    const dispatch = useAppDispatch();
+
+  function submit(data: any) {
+    dispatch(editProfile(data))
+  }
 
   return (
     <div>
@@ -15,30 +23,54 @@ const ProfileForm = () => {
           initialValues={{ remember: false }}
           onFinish={submit}
         >
-          <Form.Item<IUserInfo>
-            name="avatar"
-            rules={[{ required: true, message: "Введите Ваш email!" }]}
-          >
+          <Form.Item<IUserInfo> name="avatar">
             <Upload
+                disabled
               name="avatar"
               listType="picture-circle"
               className="avatar-uploader"
-              showUploadList={false}
-              // action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-              // beforeUpload={beforeUpload}
+              multiple={false}
+              showUploadList
+            //   action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+              beforeUpload={() => false}
+              // //   @ts-ignore
+              // defaultFileList={[userInfo?.avatar]}
               // onChange={handleChange}
             >
+              {userInfo?.avatar ? (
+                <img
+                  className="rounded-full"
+                  src={userInfo?.avatar}
+                  alt="avatar"
+                />
+              ) : (
                 <FaPlus />
-              {/* <Button icon={<FaPlus />} >
-                upload
-              </Button> */}
-              {/* {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton} */}
+              )}
             </Upload>
-
-            {/* <DatePicker format={"YYYY-MM-DD"} placeholder="Дата" /> */}
+          </Form.Item>
+          <Form.Item<IUserInfo>
+            name="userName"
+            label="Ваше имя"
+            // rules={[{ required: true, message: "Введите Ваше имя!" }]}
+          >
+            <Input defaultValue={userInfo?.userName} />
+          </Form.Item>
+          <Form.Item<IUserInfo>
+            name="email"
+            label="Email"
+            // rules={[{ required: true, message: "Введите Ваш email!" }]}
+          >
+            <Input type="email" defaultValue={userInfo?.email} />
+          </Form.Item>
+          <Form.Item<IUserInfo>
+            name="birthDate"
+            label="День рождение"
+            // rules={[{ required: true, message: "Введите Ваш днюха!" }]}
+          >
+            <DatePicker defaultValue={dayjs(userInfo?.birthDate)} />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full">
+            <Button loading={isFetchingUser} type="primary" htmlType="submit" className="w-full">
               Сохранить изменение
             </Button>
           </Form.Item>

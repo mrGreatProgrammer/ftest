@@ -10,5 +10,7 @@ export interface IUserInfo {
   userName: string;
   email: string;
   role?: rolesType[];
-  // password: string;
+  birthDate?: any;
+  password?: string;
+  createdAt?: string;
 }
